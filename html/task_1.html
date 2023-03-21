@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h1>Задача 1</h1>
+	<p>Знайти суми елементів у вказаній області</p>
+	
+	<script>
+		// генерування рандомних чисел від 1 до 10
+			function getRandomNumbers(minNum, maxNum) {
+				return minNum + Math.floor(Math.random() * (maxNum - minNum + 1))
+			}
+
+			// формування рандомного одновимірного масиву
+			function getRandomArray(arrayLength, minNum, maxNum) {
+				let array = []
+				for (let i = 0; i < arrayLength; i++) {
+					const randomNum = getRandomNumbers(minNum, maxNum)
+					array.push(randomNum)
+				}
+				return array
+			}
+
+			// формування рандомного двовимірного масиву
+			function getRandomTable(rowsNumber, colsNumber, minNum, maxNum) {
+				let table = []
+				for (let i = 0; i < rowsNumber; i++) {
+					const randomRow = getRandomArray(colsNumber, minNum, maxNum)
+					table.push(randomRow)
+				}
+				return table
+			}
+
+			// введення зміннх
+			const minNum = 1
+			const maxNum = 10
+			const rowsNumber = parseInt(prompt('введіть кількість рядочків від 4 до 10'))
+			const colsNumber = parseInt(prompt('введіть кількість колонок від 4 до 10'))
+			const randomTable = getRandomTable(rowsNumber, colsNumber, minNum, maxNum)
+
+			// console.log(randomTable)
+
+			const middleRows = Math.floor(rowsNumber / 2)
+			const middleCols = Math.floor(colsNumber / 2)
+			// console.log(middleRows)
+			// console.log(middleCols)
+
+			// знайти суму 1 області
+			let sum = 0
+			for (let i = 0; i <= middleRows - 1; i++) {
+				for (let j = 0; j <= middleCols - 1; j++) {
+					sum += randomTable[i][j]
+				}
+			}
+			// console.log(sum)
+
+			// знайти суму 2 області
+			let sum1 = 0
+			for (let i = 0; i <= middleRows - 1; i++) {
+				for (let j = middleCols; j <= colsNumber - 1; j++) {
+					sum1 += randomTable[i][j]
+				}
+			}
+			// console.log(sum1)
+
+			// знайти суму 3 області
+			let sum2 = 0
+			for (let i = middleRows; i <= rowsNumber - 1; i++) {
+				for (let j = 0; j <= middleCols - 1; j++) {
+					sum2 += randomTable[i][j]
+				}
+			}
+			// console.log(sum2)
+
+			// знайти суму 4 області
+			let sum3 = 0
+			for (let i = middleRows; i <= rowsNumber - 1; i++) {
+				for (let j = middleCols; j <= colsNumber - 1; j++) {
+					sum3 += randomTable[i][j]
+				}
+			}
+			// console.log(sum3)
+
+			// знайти суму парних рядів
+			let sum4 = 0
+			for (let i = 1; i <= rowsNumber - 1; i += 2) {
+				for (let j = 0; j <= colsNumber - 1; j++) {
+					sum4 += randomTable[i][j]
+				}
+			}
+			// console.log(sum4)
+
+			// знайти суму непарних рядів
+			let sum5 = 0
+			for (let i = 0; i <= rowsNumber - 1; i += 2) {
+				for (let j = 0; j <= colsNumber - 1; j++) {
+					sum5 += randomTable[i][j]
+				}
+			}
+			// console.log(sum5)
+
+			// знайти суму 
+			//парні рядки – непарні стовпці
+			let sum6 = 0
+			for (let i = 1; i <= rowsNumber - 1; i += 2) {
+				for (let j = 0; j <= colsNumber - 1; j += 2) {
+					sum6 += randomTable[i][j]
+				}
+			}
+			// console.log(sum6)
+
+			// непарні рядки – парні стовпці
+			let sum7 = 0
+			for (let i = 0; i <= rowsNumber - 1; i += 2) {
+				for (let j = 0; j <= colsNumber - 1; j += 2) {
+					sum7 += randomTable[i][j]
+				}
+			}
+			// console.log(sum7)
+
+// виводимо відповілі
+document.write(`Сума в 1 області -----${sum}<br>`)
+document.write(`Сума в 2 області -----${sum1}<br>`)
+document.write(`Сума в 3 області -----${sum2}<br>`)
+document.write(`Сума в 4 області -----${sum3}<br>`)
+document.write(`Сума парних рядів -----${sum4}<br>`)
+document.write(`Сума непарних рядів -----${sum5}<br>`)
+document.write(`Сума парні рядки – непарні стовпці -----${sum6}<br>`)
+document.write(`Сума непарні рядки – парні стовпці -----${sum7}<br>`)
+
+	</script>
+</body>
+</html>

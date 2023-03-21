@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+	<p>
+		Задача 3. Морський бій. Випадковим чином на двовимірному полі розміром 6*6 розташовується 5 кораблів.
+		Користувач стріляє вказуючи координати. Гра продовжується поки не потоплено усі кораблі або у користувача
+		не закінчаться снаряди.
+	</p>
+	<script>
+		//генерування рандомних чисел від 0 до 1
+		function getRandomNumbers(minNum, maxNum) {
+			return minNum + Math.floor(Math.random() * (maxNum - minNum + 1))
+		}
+
+
+		// формування рандомного одновимірного масиву
+		function getArray(arrayLength) {
+			const gameArray = new Array(arrayLength).fill(0)
+			return gameArray
+		}
+
+		// формування рандомного двовимірного масиву
+		function getFightingFildTable(rowsNumber, colsNumber) {
+			let tableArrey = []
+			for (let i = 0; i < rowsNumber; i++) {
+				const table = getArray(colsNumber, minNum,)
+				tableArrey.push(table)
+			}
+			return tableArrey
+		}
+
+		// функція для вільної розстановки кораблів
+		//-------------------------------------------------------------------------
+		// можливо не правильно функція в функції, але зробив щось подібне до задачі, яку розглядали на 10 уроці
+		// пробував її убрати, але тоді не будується игрове поле. З'являеться помилка в передачі координат.
+		function getFightingFild(rowNumber, colomnNumber, shipsNumber) {
+			let fightingFild = getFightingFildTable(rowNumber, colomnNumber)
+			for (let i = 0; i < shipsNumber; i++) {
+				let rowsShip
+				let colsShip
+				do {
+					rowsShip = getRandomNumbers(0, 5)
+					colsShip = getRandomNumbers(0, 5)
+				}
+				while (fightingFild[rowsShip][colsShip] === 1)
+				fightingFild[rowsShip][colsShip] = 1
+			}
+			return fightingFild
+		}
+
+		// полювання на кораблі
+		// вести кількість пострілів
+		// описуємо функцію для гри
+		function isHuntingForShips(fightingFild, numberShoots, shipsNumber) {
+			for (let i = 0; i < numberShoots && shipsNumber; i++) {
+				let userStrikePosition1 = parseInt(prompt('корабль знаходититься за координатами на ігровому полі 6 на 6 введіть перше значення')) - 1
+				let userStrikePosition2 = parseInt(prompt('корабль знаходититься за координатами на ігровому полі 6 на 6 введіть друге значення')) - 1
+
+				if (fightingFild[userStrikePosition1][userStrikePosition2] === 1) {
+					shipsNumber--
+					fightingFild[userStrikePosition1][userStrikePosition2] = 0
+
+					alert('попали')
+				}
+				else
+					alert('промах')
+			}
+		}
+
+		const minNum = 0
+		const maxNum = 5
+		const rowsNumber = 6
+		const colsNumber = 6
+		const shipsNumber = 5
+		// введення кількості пострілів
+		const numberShoots = parseInt(prompt('введіть кількість пострілів, щоб вразити 5 кораблів'))
+
+		const fightingFildTable = getFightingFildTable(rowsNumber, colsNumber)
+		console.log(fightingFildTable)
+
+		const fightingFild = getFightingFild(rowsNumber, colsNumber, shipsNumber)
+		console.log(fightingFild)
+
+		let huntingForShips = isHuntingForShips(fightingFild, numberShoots, shipsNumber)
+		console.log(huntingForShips)
+
+
+
+
+	</script>
+</body>
+
+</html>

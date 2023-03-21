@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h1>Задача 2</h1>
+	<p>
+		Дано інформацію про прибуток К магазинів протягом тижня. Знайти :
+	</p>
+	<ol>
+		<li>загальний прибуток кожного масиву за тиждень;</li>
+		<li>загальний прибуток усіх магазинів по дням (загальний прибуток усіх магазинів за понеділок,
+			за вівторок, і т.д.);</li>
+		<li>загальний прибуток за робочі дні</li>
+		<li>загальний прибуток за вихідні дні</li>
+		<li>максимальний прибуток за середу</li>
+		<li>сформувати загальний список (одновимірний масив) зі значенням, які що більші за 200</li>
+		<li>відсортувати кожен тиждень за зростанням</li>
+		<li>відсортувати тижні (рядки) за спаданням максимального елементи у цьому тижні (рядку), тобто при порівнянні рядків
+		потрібно порівнювати максимальні елементи у кожному з цих рядків</li>
+		<li>упорядкувати тижні (рядки) за спаданням суми елементів у рядку (тобто при порівнянні двох рядків треба знайти суму
+		кожного з рядків і порівнювати ці суми, на основі цих сум буде зрозуміло, який з елементів повинен іти раніше).</li>
+	</ol>
+	<script>
+		// генерування рандомних чисел від 100 до 500
+			function getRandomNumbers(minNum, maxNum) {
+				return minNum + Math.floor(Math.random() * (maxNum - minNum + 1))
+			}
+
+			// формування рандомного одновимірного масиву
+			function getRandomArray(arrayLength, minNum, maxNum) {
+				let array = []
+				for (let i = 0; i < arrayLength; i++) {
+					const randomNum = getRandomNumbers(minNum, maxNum)
+					array.push(randomNum)
+				}
+				return array
+			}
+
+			// формування рандомного двовимірного масиву
+			function getRandomTable(storeNumber, dayNumber, minNum, maxNum) {
+				let table = []
+				for (let i = 0; i < storeNumber; i++) {
+					const randomStore = getRandomArray(dayNumber, minNum, maxNum)
+					table.push(randomStore)
+				}
+				return table
+			}
+			//=========рішення задачі==============================================
+			//=====================================================================
+
+			// загальний прибуток кожного масиву за тиждень
+			function getProfitEachStoreForWeek(storeNumber, dayNumber) {
+				let sumForWeek = 0
+					let profitStoresWeek = []
+					for (let i = 0; i < storeNumber; i++) {
+						for (let j = 0; j < dayNumber; j++)
+							sumForWeek += randomTable[i][j]
+						profitStoresWeek.push(sumForWeek)
+					}
+					return profitStoresWeek
+				}
+
+			//======================================================================
+				// загальний прибуток усіх магазинів по дням (загальний прибуток усіх магазинів за понеділок,
+				// за вівторок, і т.д.)
+				function getProfitEachStoreForDay(storeNumber, dayNumber) {
+					let profitStoresDays = []
+					for (let i = 0; i < dayNumber; i++) {
+						let sumForDay = 0
+						for (let j = 0; j < storeNumber; j++)
+							sumForDay += randomTable[j][i]
+						profitStoresDays.push(sumForDay)
+					}
+					return profitStoresDays
+				}
+
+			//======================================================================
+				// загальний прибуток за робочі дні
+				function getProfitEachStoreForWorkDays(storeNumber, dayNumber) {
+					let sumForWorkDays = 0
+					for (let i = 0; i < 5; i++) {
+						for (let j = 0; j < storeNumber; j++)
+							sumForWorkDays += randomTable[j][i]
+						}
+					return sumForWorkDays
+				}
+
+			//======================================================================
+				// загальний прибуток за вихідні дні
+				function getProfitEachStoreForWeekend(storeNumber, dayNumber) {
+					let sumForWeekend = 0
+					for (let i = 5; i < dayNumber; i++) {
+						for (let j = 0; j < storeNumber; j++)
+						sumForWeekend += randomTable[j][i]
+					}
+					return sumForWeekend
+				}
+
+			//=====================================================================
+				// максимальний прибуток за середу
+				function getMaxProfitDay(storeNumber, dayNumber) {
+					let maxSumForDay = 0
+					let i = dayNumber
+					for (let j = 0; j < storeNumber; j++) {
+						if (randomTable[j][i] > maxSumForDay)
+							maxSumForDay = randomTable[j][i]
+					}
+					return maxSumForDay
+				}
+
+			//=======================================================================
+				//сформувати загальний список (одновимірний масив) зі значенням, які що більші за 200
+				function getProfitMore200(storeNumber, dayNumber) {
+					let profitMore200 = []
+					let profit = 200
+					for (let i = 0; i < storeNumber; i++) {
+						for (let j = 0; j < dayNumber; j++)
+							if (randomTable[i][j] > profit)
+								profitMore200.push(randomTable[i][j])
+					}
+					return profitMore200
+				}
+
+			//=======================================================================
+				// відсортувати кожен тиждень за зростанням
+				function getSortEachWeekHeight(randomTable) {
+					let newTable = []
+					for (let storeNumber = 0; storeNumber < randomTable.length; storeNumber++) {
+						let newArray = randomTable[storeNumber].sort((el1, el2) => el1 - el2)
+						newTable.push(newArray)
+					}
+					return newTable
+				}
+
+			// ==============Вводимо дані============================================
+				const minNum = 100
+				const maxNum = 500
+				const dayNumber = 7
+				const storeNumber = parseInt(prompt('введіть кількість магазинів'))
+				
+			//==============Вивдимо дані==============================================
+			// все це можна дооформити, але це перші мої такі роботи, хочеться багато встигнути і розібратися
+			//=======================================================================
+			// --------------------будуємо таблицю
+				const randomTable = getRandomTable(storeNumber, dayNumber, minNum, maxNum)
+				console.log(randomTable)
+
+			//	 загальний прибуток кожного масиву за тиждень
+				const profitEachStoreForWeek = getProfitEachStoreForWeek(storeNumber, dayNumber)
+			document.write(`загальний прибуток кожного масиву за тиждень ${profitEachStoreForWeek.join(',  ') }<br>`)
+				
+				const profitEachStoreForDay = getProfitEachStoreForDay(storeNumber, dayNumber)
+				document.write(`<br>загальний прибуток усіх магазинів по дням ${profitEachStoreForDay.join(',  ') }<br>`)
+				
+				const profitEachStoreForWorkDays = getProfitEachStoreForWorkDays(storeNumber, dayNumber)
+				document.write(`<br>загальний прибуток за робочі дні ${profitEachStoreForWorkDays}<br>`)
+				
+				const profitEachStoreForWeekend = getProfitEachStoreForWeekend(storeNumber, dayNumber)
+				document.write(`<br>загальний прибуток за вихідні дні ${profitEachStoreForWeekend}<br>`)
+				
+				const maxProitDayf = getMaxProfitDay(storeNumber, 2)
+				document.write(`<br>максимальний прибуток за середу ${maxProitDayf}<br>`)
+				
+				const listProfitMore200 = getProfitMore200(storeNumber, dayNumber)
+				document.write(`<br>загальний список (одновимірний масив) зі значенням, які що більші за 200 ${listProfitMore200.join(',  ') }<br>`)
+				
+				const sortEachWeekHeight = getSortEachWeekHeight(randomTable)
+				document.write(`<br>відсортувати кожен тиждень за зростанням ${sortEachWeekHeight}<br>`)
+				
+				</script>
+</body>
+</html>
